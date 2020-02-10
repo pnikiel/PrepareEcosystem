@@ -29,10 +29,26 @@ rm -fr open62541-compat
 git clone $OPEN62541_COMPAT_URL --depth=1 -b $OPEN62541_COMPAT_TAG || exit
 cd open62541-compat
 mkdir build && cd build
-cmake -DSTANDALONE_BUILD=ON -DLOGIT_BUILD_OPTION=LOGIT_AS_EXT_STATIC -DOPEN62541-COMPAT_BUILD_CONFIG_FILE=boost_lcg.cmake -DLOGIT_INCLUDE_DIR=$DEPLOYMENT/LogIt/LogIt/include -DLOGIT_EXT_LIB_DIR=$DEPLOYMENT/LogIt/lib -DCMAKE_INSTALL_PREFIX=$DEPLOYMENT/open62541-compat -DSKIP_TESTS=ON  ../ || exit
+cmake -DSTANDALONE_BUILD=ON -DLOGIT_BUILD_OPTION=LOGIT_AS_EXT_STATIC -DOPEN62541-COMPAT_BUILD_CONFIG_FILE=boost_lcg.cmake -DLOGIT_INCLUDE_DIR=$DEPLOYMENT/LogIt/include -DLOGIT_EXT_LIB_DIR=$DEPLOYMENT/LogIt/lib -DCMAKE_INSTALL_PREFIX=$DEPLOYMENT/open62541-compat -DSKIP_TESTS=ON  ../ || exit
 make || exit
 make install || exit
 cd $WD
+}
+
+prep_UaoClientForOpcUaSca()
+{
+cd $WORK
+UAOCLIENTFOROPCUASCA_URL="ssh://git@gitlab.cern.ch:7999/atlas-dcs-opcua-servers/UaoClientForOpcUaSca.git"
+UAOCLIENTFOROPCUASCA_TAG="OPCUA-1714_deployable_as_INSTALL_target"
+rm -fr UaoClientForOpcUaSca
+git clone $UAOCLIENTFOROPCUASCA_URL --depth=1 -b $UAOCLIENTFOROPCUASCA_TAG || exit
+cd UaoClientForOpcUaSca
+mkdir build && cd build
+cmake -DBUILD_CONFIG=open62541_config.cmake -DBUILD_STANDALONE=ON -DOPEN62541_COMPAT_DIR=$DEPLOYMENT/open62541-compat -DLOGIT_INCLUDE_DIR=$DEPLOYMENT/LogIt/include -DCMAKE_INSTALL_PREFIX=$DEPLOYMENT/UaoClientForOpcUaSca ../
+make || exit
+make install || exit
+cd $WD
+
 }
 
 rm -Rf $DEPLOYMENT $WORK
@@ -41,5 +57,5 @@ cd $WORK
 
 prep_LogIt
 prep_open62541compat
-
+prep_UaoClientForOpcUaSca
 
