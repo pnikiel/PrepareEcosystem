@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 
 WD=`pwd`
+
 DEPLOYMENT="$WD/deploy"
 WORK="$WD/work"
+
+usage()
+{
+echo "This script will build different components of quasar and quasar-related ecosystem mostly for TDAQ groups"
+echo "Usage:"
+echo "--install_prefix     where to deploy your things (if skipped it will default to deploy/ dir created here"
+}
 
 prep_LogIt()
 {
@@ -51,8 +59,21 @@ cd $WD
 
 }
 
-rm -Rf $DEPLOYMENT $WORK
-mkdir $DEPLOYMENT $WORK
+# parse params
+while [[ "$#" > 0 ]]; do case $1 in
+  --install_prefix) INSTALL_PREFIX="$2"; shift;shift;;
+  -h|--help) usage; exit;;
+  *) echo "Unknown parameter passed: $1"; exit; shift; shift;;
+esac; done
+
+if [ ! -z "$INSTALL_PREFIX" ]; then
+  DEPLOYMENT=$INSTALL_PREFIX
+fi
+
+echo "Will deploy your suff to $DEPLOYMENT"
+
+rm -Rf $WORK
+mkdir $WORK
 cd $WORK
 
 prep_LogIt

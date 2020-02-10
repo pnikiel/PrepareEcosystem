@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Building quasar ecosystem libs</title>
+  </head>
+  <body>
+    Written by: Piotr P. Nikiel, 10-Feb-2020<br>
+    <br>
+    <h1>Preface</h1>
+    <p>It turned out that many software components initially conceived
+      for DCS found applications in non-DCS groups, e.g. in TDAQ or
+      other forms of configuration software.<br>
+    </p>
+    <p>At the time of writing (Feb 2020) this applies mostly to:<br>
+      <br>
+      * open62541-compat<br>
+      * UaObjects client for SCA OPC-UA<br>
+      * LogIt<br>
+    </p>
+    <p>Quasar normally takes good care of integrating these software
+      components, so as long as you develop quasar server(s), you are
+      good and you do not have to think too much.<br>
+    </p>
+    <p>However, what happens when you abandon Quasar? Then you have to
+      think how to deploy these dependencies.<br>
+    </p>
+    <p>This project is precisely made for that.<br>
+    </p>
+    <h1>Steps</h1>
+    <p><br>
+      OK, nothing fancy really:<br>
+      <br>
+    </p>
+    <ul>
+      <li>setup your compiler (source or set paths of whatever). After
+        this step, invoking "c++" should be routed to the compiler of
+        choice. For example, in my case:<br>
+        $ c++ --version<br>
+        c++ (GCC) 8.3.0<br>
+      </li>
+      <li>decide where you'd like to deploy the software built by this
+        script.<br>
+        I (Piotr) normally deploy it to /opt but this might vary. <br>
+        Note that deployment will be done by equivalent of "make
+        install" so make sure that the target location is writable, etc.<br>
+        The path you decided on will be used in the step below.<br>
+      </li>
+      <li>just run the scripts, e.g.:<br>
+        ./prepare.sh --install_prefix /opt/tdaqQuasarEcosystem/gcc8.3.0<br>
+      </li>
+    </ul>
+  </body>
+</html>
