@@ -4,11 +4,19 @@ WD=`pwd`
 
 DEPLOYMENT="$WD/deploy"
 WORK="$WD/work"
+WITH_LOGIT=false
+WITH_O6COMPAT=false
+WITH_UAOSCA=false
+WITH_ALL=false
 
 usage()
 {
 echo "This script will build different components of quasar and quasar-related ecosystem mostly for TDAQ groups"
 echo "Usage:"
+echo "--with_all           if you want to deploy all possible components (implies all --with_XXX switches)"
+echo "--with_LogIt         include LogIt"
+echo "--with_o6compat      include open62541-compat"
+echo "--with_UaoSca        include UaoClientForOpcUaSca"
 echo "--install_prefix     where to deploy your things (if skipped it will default to deploy/ dir created here"
 }
 
@@ -62,6 +70,10 @@ cd $WD
 # parse params
 while [[ "$#" > 0 ]]; do case $1 in
   --install_prefix) INSTALL_PREFIX="$2"; shift;shift;;
+  --with_all) WITH_ALL=true; shift;;
+  --with_LogIt) WITH_LOGIT=true; shift;;
+  --with_o6compat) WITH_O6COMPAT=true; shift;;
+  --with_UaoSca) WITH_UAOSCA=true; shift;;
   -h|--help) usage; exit;;
   *) echo "Unknown parameter passed: $1"; exit; shift; shift;;
 esac; done
@@ -72,11 +84,31 @@ fi
 
 echo "Will deploy your suff to $DEPLOYMENT"
 
+if [ $WITH_ALL == "true" ]; then
+    WITH_LOGIT=true
+    WITH_O6COMPAT=true
+    WITH_UAOSCA=true
+fi
+
+echo "Component selection: (see with --help or try --all) "
+echo "LogIt ..................... $WITH_LOGIT"
+echo "open62541-compat .......... $WITH_O6COMPAT"
+echo "UaoClientForOpcUaSca ...... $WITH_UAOSCA"
+
 rm -Rf $WORK
 mkdir $WORK
 cd $WORK
 
-prep_LogIt
-prep_open62541compat
-prep_UaoClientForOpcUaSca
+if [ $WITH_LOGIT == "true" ]; then
+    prep_LogIt
+fi
+
+if [ $WITH_O6COMPAT == "true" ]; then
+    prep_open62541compat
+fi
+
+if [ $WITH_UAOSCA == "true" ]; then
+    prep_UaoClientForOpcUaSca
+fi
+
 
