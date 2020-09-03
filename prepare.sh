@@ -90,7 +90,7 @@ if [ $WITH_ALL == "true" ]; then
     WITH_UAOSCA=true
 fi
 
-echo "Component selection: (see with --help or try --all) "
+echo "Component selection: (see with --help or try --with_all) "
 echo "LogIt ..................... $WITH_LOGIT"
 echo "open62541-compat .......... $WITH_O6COMPAT"
 echo "UaoClientForOpcUaSca ...... $WITH_UAOSCA"
