@@ -24,7 +24,7 @@ prep_LogIt()
 {
 cd $WORK
 LOGIT_URL="https://github.com/quasar-team/LogIt.git"
-LOGIT_TAG="OPCUA-1710-install-target-for-LogIt"
+LOGIT_TAG="v0.1.3"
 rm -fr LogIt
 git clone $LOGIT_URL --depth=1 -b $LOGIT_TAG LogIt || exit
 cd LogIt
