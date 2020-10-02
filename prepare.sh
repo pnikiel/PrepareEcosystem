@@ -41,7 +41,6 @@ prep_LogIt()
 {
 cd $WORK
 LOGIT_URL="https://github.com/quasar-team/LogIt.git"
-TAG_LOGIT="v0.1.3"
 rm -fr LogIt
 git clone $LOGIT_URL $SHALLOW_CLONE_SETTINGS -b $TAG_LOGIT LogIt || exit
 cd LogIt
@@ -57,7 +56,6 @@ prep_open62541compat()
 {
 cd $WORK
 OPEN62541_COMPAT_URL="https://github.com/quasar-team/open62541-compat.git"
-TAG_O6COMPAT="master"
 rm -fr open62541-compat
 git clone $OPEN62541_COMPAT_URL $SHALLOW_CLONE_SETTINGS -b $TAG_O6COMPAT || exit
 cd open62541-compat
@@ -72,7 +70,6 @@ prep_UaoClientForOpcUaSca()
 {
 cd $WORK
 UAOCLIENTFOROPCUASCA_URL="ssh://git@gitlab.cern.ch:7999/atlas-dcs-opcua-servers/UaoClientForOpcUaSca.git"
-TAG_UAOSCA="OPCUA-1714_deployable_as_INSTALL_target"
 rm -fr UaoClientForOpcUaSca
 git clone $UAOCLIENTFOROPCUASCA_URL $SHALLOW_CLONE_SETTINGS -b $UAOCLIENTFOROPCUASCA_TAG || exit
 cd UaoClientForOpcUaSca
